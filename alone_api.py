@@ -15,12 +15,12 @@ def get_real_ip():
         return ip
     except Exception:
         return "127.0.0.1"  # 回退到本地回环地址
-
 # 全局变量
 class Global:
     # Ollama服务地址
     host = "http://{}:{}".format(get_real_ip(),environ.get("OLLAMA_HOST").split(":")[-1])
 print(Global.host)
+
 app = FastAPI()
 
 # Ollama健康检查
