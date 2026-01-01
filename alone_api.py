@@ -18,17 +18,55 @@ def get_real_ip():
 # 全局变量
 class Global:
     # Ollama服务地址
-    host = "http://{}:{}".format(get_real_ip(),environ.get("OLLAMA_HOST").split(":")[-1])
-print(Global.host)
+    host = "http://{}:{}/".format(get_real_ip(),environ.get("OLLAMA_HOST").split(":")[-1])
 
 app = FastAPI()
 
 # Ollama健康检查
 @app.get("/")
-async def read_root():
+async def health():
     async with httpx.AsyncClient() as client:
-        r = await client.get(Global.host)
-        return r.content
+        data = {
+            "status": None,
+            "health": None,
+            "error": None,
+            "host": None
+        }
+        try:
+            r = await client.get(Global.host)
+            data["status"] = r.status_code
+            data["health"] = 1
+            data["error"] = 0
+        except Exception as e:
+            data["status"] = 404
+            data["health"] = 0
+            data["error"] = e
+        data["host"] = Global.host
+        return data
+
+# Ollama可用模型
+@app.get("/models")
+async def health():
+    async with httpx.AsyncClient() as client:
+        data = {}
+        try:
+            r = await client.get(Global.host + "api/tags")
+            data["status"] = r.status_code
+            data["models"] = []
+            for i in r.json()["models"]:
+                model = {
+                    "name": i["name"],
+                    "model": i["model"],
+                    "size": i["size"]
+                }
+                data["models"].append(model)
+            data["error"] = 0
+        except Exception as e:
+            data["status"] = 404
+            data["models"] = None
+            data["error"] = e
+        data["host"] = Global.host
+        return data
 
 if __name__ == "__main__":
     # 直接运行 Python 文件时启动服务器
