@@ -1,5 +1,5 @@
 <div align="center">
-    <img style="width:75px; height:60px; object-fit:cover; object-position:top;" src="./UI/img/Alone11.png"></img>
+    <img style="width:75px;" src="./UI/img/Alone11.png"></img>
 </div>
 
 <h1 align="center">翼龙</h1>
