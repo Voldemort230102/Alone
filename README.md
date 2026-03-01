@@ -1,5 +1,5 @@
 <div align="center">
-    <img style="width:75px; height:60px; object-fit:cover; object-position:top;" src="../../UI/img/Alone11.png"></img>
+    <img style="width:75px; height:60px; object-fit:cover; object-position:top;" src="./UI/img/Alone11.png"></img>
 </div>
 
 <h1 align="center">翼龙</h1>
@@ -13,7 +13,7 @@
 </div>
 
 🌍 **语言**  
-简体中文 | [English](../en/README.md)
+简体中文 | [English](./docs/en/README.md)
 
 # 翼龙
 基于多模态大语言模型技术的跨任务智能平台设计与研究。
